@@ -10,19 +10,24 @@
  *    written permission of Shanghai Mi-Me Financial Information Service Co., Ltd.
  * -------------------------------------------------------------------------------------
  */
-package com.fishfree.jpa.repository;
+package com.fishfree.controller;
 
-
-import com.fishfree.jpa.entity.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * @author litengfeng
  * @version 1.0
- * @date 2018/6/4 11:39
+ * @date 2018/6/6 9:59
  * @project spring-boot-demo
  */
-@Repository
-public interface UserRepository extends JpaRepository<User,Long> {
+
+@Controller
+public class IndexController {
+
+    @RequestMapping(value = "/index",method = RequestMethod.GET)
+    public String index(){
+        return "index";
+    }
 }

@@ -10,40 +10,35 @@
  *    written permission of Shanghai Mi-Me Financial Information Service Co., Ltd.
  * -------------------------------------------------------------------------------------
  */
-package com.fishfree;
+package com.fishfree.jpa.controller;
 
-import com.fishfree.service.GreetingService;
+import com.fishfree.jpa.entity.User;
+import com.fishfree.jpa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @author litengfeng
  * @version 1.0
- * @date 2018/6/5 18:08
+ * @date 2018/6/6 15:33
  * @project spring-boot-demo
  */
 
-@RestController
-@SpringBootApplication
-public class SpringBootApplicationWebMain {
 
-    public static void main(String[] args){
-        SpringApplication.run(SpringBootApplicationWebMain.class);
+@RestController
+@RequestMapping(value = "jpa")
+public class JpaUserController {
+    @Autowired
+    private UserRepository userRepository;
+
+    //获取所有的会员列表
+    @RequestMapping(value = "list", method = RequestMethod.GET)
+    public List<User> list() {
+        return userRepository.findAll();
     }
 
-//    @Autowired
-//    private GreetingService greetingService;
-//
-//    @RequestMapping("/web")
-//    public String home(){
-//        return "hello spring boot web";
-//    }
-//
-//    @RequestMapping("/greeting")
-//    public String greeting(){
-//        return greetingService.greeting();
-//    }
 }

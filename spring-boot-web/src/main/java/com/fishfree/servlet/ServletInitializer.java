@@ -10,19 +10,25 @@
  *    written permission of Shanghai Mi-Me Financial Information Service Co., Ltd.
  * -------------------------------------------------------------------------------------
  */
-package com.fishfree.jpa.repository;
+package com.fishfree.servlet;
 
-
-import com.fishfree.jpa.entity.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import com.fishfree.SpringBootApplicationWebMain;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 /**
  * @author litengfeng
  * @version 1.0
- * @date 2018/6/4 11:39
+ * @date 2018/6/6 9:30
  * @project spring-boot-demo
  */
-@Repository
-public interface UserRepository extends JpaRepository<User,Long> {
+
+
+public class ServletInitializer extends SpringBootServletInitializer {
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        //配置启动类
+        return builder.sources(SpringBootApplicationWebMain.class);
+    }
 }

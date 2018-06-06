@@ -8,8 +8,36 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
+    <!--如果需要将包部署到外部的tomcat中，需要打成war，不然webapp将不会打入到包中-->
+    <packaging>war</packaging>
     <artifactId>spring-boot-web</artifactId>
 
+    <dependencies>
+        <!-- springboot支持tomcat组件 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <!--<scope>provided</scope>-->
+        </dependency>
+
+        <!-- spring boot tomcat jsp 支持开启 -->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+        </dependency>
+
+        <!--&lt;!&ndash;servlet支持开启&ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>javax.servlet</groupId>-->
+            <!--<artifactId>javax.servlet-api</artifactId>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash; jstl 支持开启 &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>javax.servlet</groupId>-->
+            <!--<artifactId>jstl</artifactId>-->
+        <!--</dependency>-->
+
+
+    </dependencies>
 
 </project>

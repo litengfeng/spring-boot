@@ -34,8 +34,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 //事务管理器
 @EnableTransactionManagement(proxyTargetClass = true)
-@EnableJpaRepositories(basePackages = "com.**.repository.*")
-@EntityScan(basePackages = "com.**.entity.*")
+@EnableJpaRepositories(basePackages = "com.**.repository")
+@EntityScan(basePackages = "com.**.entity")
 public class JpaConfiguration {
 
 

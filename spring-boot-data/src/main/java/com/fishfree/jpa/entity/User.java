@@ -30,7 +30,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "user")
-@Data
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,6 +45,11 @@ public class User {
     @JsonBackReference
     Department department;
 
+    /**
+     * 用户和角色可以多对多
+     * 会创建单独的映射表user_role,
+     * 使用user_id和roles_id，进行关联
+     */
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = {@JoinColumn(name = "user_id")},
@@ -53,4 +57,43 @@ public class User {
     List<Role> roles;
 
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 }
