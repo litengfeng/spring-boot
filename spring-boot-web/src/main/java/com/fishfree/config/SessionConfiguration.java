@@ -10,27 +10,29 @@
  *    written permission of Shanghai Mi-Me Financial Information Service Co., Ltd.
  * -------------------------------------------------------------------------------------
  */
-package com.fishfree;
+package com.fishfree.config;
 
-import com.fishfree.service.GreetingService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.fishfree.inteceptor.SessionInterceptor;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
+ * 配置相应的session配置
+ *
  * @author litengfeng
  * @version 1.0
- * @date 2018/6/5 18:08
+ * @date 2018/6/7 15:47
  * @project spring-boot-demo
  */
 
-@SpringBootApplication
-public class SpringBootApplicationWebMain {
-    public static void main(String[] args){
-        SpringApplication.run(SpringBootApplicationWebMain.class);
-    }
 
+@Configuration
+public class SessionConfiguration implements WebMvcConfigurer {
+
+    //增加拦截器
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new SessionInterceptor()).addPathPatterns("/**");
+    }
 }

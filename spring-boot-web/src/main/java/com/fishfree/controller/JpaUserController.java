@@ -10,16 +10,20 @@
  *    written permission of Shanghai Mi-Me Financial Information Service Co., Ltd.
  * -------------------------------------------------------------------------------------
  */
-package com.fishfree.jpa.controller;
+package com.fishfree.controller;
 
 import com.fishfree.jpa.entity.User;
 import com.fishfree.jpa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Optional;
+
 
 /**
  * @author litengfeng
@@ -30,7 +34,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(value = "jpa")
+@RequestMapping(value = "user")
 public class JpaUserController {
     @Autowired
     private UserRepository userRepository;
@@ -41,4 +45,28 @@ public class JpaUserController {
         return userRepository.findAll();
     }
 
+    @RequestMapping(value = "login",method = RequestMethod.GET)
+    public String login(User user, HttpServletRequest request){
+        String result = "login success";
+        boolean loginFlag = true;
+        User userExample = new User();
+        userExample.setName(user.getName());
+
+        Optional<User> userOptional = userRepository.findOne(Example.of(userExample));
+
+        if(!userOptional.isPresent()){
+            result = "登录失败，不存在该用户";
+            loginFlag = false;
+        }else{
+            if(!userOptional.get().getPwd().equals(user.getPwd())){
+                result = "登录失败，密码不正确";
+                loginFlag = false;
+            }
+        }
+        if(loginFlag){
+            //登录成功后设置到session中
+            request.getSession().setAttribute("user_session",user);
+        }
+        return result;
+    }
 }

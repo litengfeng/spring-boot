@@ -57,6 +57,21 @@ public class User {
     List<Role> roles;
 
 
+    /**
+     * 密码字段
+     */
+    @Column
+    private String pwd;
+
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+
     public Long getId() {
         return id;
     }

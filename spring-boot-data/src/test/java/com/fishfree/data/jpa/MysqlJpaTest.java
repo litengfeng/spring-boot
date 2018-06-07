@@ -72,14 +72,15 @@ public class MysqlJpaTest {
         Assert.notNull(department.getId());
 
         Role role = new Role();
-        role.setName("admin");
+        role.setName("guest");
         roleRepository.save(role);
         Assert.notNull(role.getId());
 
         User user = new User();
-        user.setName("张三");
+        user.setName("李四");
         user.setCreateDate(new Date());
         user.setDepartment(department);
+        user.setPwd("123456");
 
         List<Role> roles = roleRepository.findAll();
         Assert.notNull(roles);

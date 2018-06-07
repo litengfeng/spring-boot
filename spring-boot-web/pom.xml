@@ -26,18 +26,20 @@
             <artifactId>tomcat-embed-jasper</artifactId>
         </dependency>
 
-        <!--&lt;!&ndash;servlet支持开启&ndash;&gt;-->
         <!--<dependency>-->
             <!--<groupId>javax.servlet</groupId>-->
             <!--<artifactId>javax.servlet-api</artifactId>-->
         <!--</dependency>-->
-        <!--&lt;!&ndash; jstl 支持开启 &ndash;&gt;-->
-        <!--<dependency>-->
-            <!--<groupId>javax.servlet</groupId>-->
-            <!--<artifactId>jstl</artifactId>-->
-        <!--</dependency>-->
-
-
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.47</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fishfree</groupId>
+            <artifactId>spring-boot-data</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 </project>

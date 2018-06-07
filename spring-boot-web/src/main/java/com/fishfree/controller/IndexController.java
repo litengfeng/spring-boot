@@ -30,4 +30,9 @@ public class IndexController {
     public String index(){
         return "index";
     }
+
+    @RequestMapping(value = "user/login_view",method = RequestMethod.GET)
+    public String login_new(){
+        return "login";
+    }
 }

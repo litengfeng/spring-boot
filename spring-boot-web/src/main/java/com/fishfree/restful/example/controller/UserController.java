@@ -27,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @project spring-boot-demo
  */
 
-@RestController
+//@RestController
 @RequestMapping("user")
 public class UserController {
 

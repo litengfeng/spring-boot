@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; utf-8" language="java" %>
+<%@ page contentType="text/html; charset=utf-8" language="java" %>
 
 <html>
 
@@ -6,6 +6,6 @@
     <title>spring boot demo index</title>
 </head>
 <body>
-this is index page
+成功访问首页
 </body>
 </html>
