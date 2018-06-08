@@ -10,34 +10,33 @@
  *    written permission of Shanghai Mi-Me Financial Information Service Co., Ltd.
  * -------------------------------------------------------------------------------------
  */
-package com.fishfree.controller;
+package com.fishfree.util;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author litengfeng
  * @version 1.0
- * @date 2018/6/6 9:59
+ * @date 2018/6/8 17:04
  * @project spring-boot-demo
  */
 
-@Controller
-public class IndexController {
 
-    @RequestMapping(value = "/index",method = RequestMethod.GET)
-    public String index(){
-        return "index";
-    }
+public class BeanUtil {
 
-    @RequestMapping(value = "user/login_view",method = RequestMethod.GET)
-    public String login_new(){
-        return "login";
-    }
 
-    @RequestMapping(value = "index/upload")
-    public String load(){
-        return "upload";//跳转到load的jsp页面
+    /**
+     * 通过web的httpServletRequest对象获取
+     * Spring容器的WebApplicationContext上下文
+     * 从而从容器内拿到相应的Bean
+     * @param clazz
+     * @param request
+     * @param <T>
+     * @return
+     */
+    public static <T> T getBean(Class<T> clazz, HttpServletRequest request){
+        return WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext()).getBean(clazz);
     }
 }

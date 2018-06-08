@@ -16,6 +16,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.fishfree.jpa.entity.LoggerEntity;
 import com.fishfree.jpa.repository.LoggerRepository;
+import com.fishfree.util.BeanUtil;
 import com.fishfree.util.RequestUtil;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
@@ -77,12 +78,7 @@ public class LoggerInterceptor implements HandlerInterceptor {
         loggerEntity.setReturnTime(currentTime+"");
 
         //保存日志到数据库中
-        getDAO(LoggerRepository.class,request).save(loggerEntity);
+        BeanUtil.getBean(LoggerRepository.class,request).save(loggerEntity);
     }
 
-    private <T> T getDAO(Class<T> clazz,HttpServletRequest request){
-        //通过WebApplicationContext获取bean
-        ApplicationContext  applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
-        return applicationContext.getBean(clazz);
-    }
 }
