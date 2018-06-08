@@ -12,8 +12,11 @@
  */
 package com.fishfree.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.fishfree.jpa.entity.User;
 import com.fishfree.jpa.repository.UserRepository;
+import com.fishfree.util.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,8 +48,8 @@ public class JpaUserController {
         return userRepository.findAll();
     }
 
-    @RequestMapping(value = "login",method = RequestMethod.GET)
-    public String login(User user, HttpServletRequest request){
+    @RequestMapping(value = "login", method = RequestMethod.GET)
+    public String login(User user, HttpServletRequest request) {
         String result = "login success";
         boolean loginFlag = true;
         User userExample = new User();
@@ -54,19 +57,22 @@ public class JpaUserController {
 
         Optional<User> userOptional = userRepository.findOne(Example.of(userExample));
 
-        if(!userOptional.isPresent()){
+        if (!userOptional.isPresent()) {
             result = "登录失败，不存在该用户";
             loginFlag = false;
-        }else{
-            if(!userOptional.get().getPwd().equals(user.getPwd())){
+        } else {
+            if (!userOptional.get().getPwd().equals(user.getPwd())) {
                 result = "登录失败，密码不正确";
                 loginFlag = false;
             }
         }
-        if(loginFlag){
+        if (loginFlag) {
             //登录成功后设置到session中
-            request.getSession().setAttribute("user_session",user);
+            request.getSession().setAttribute("user_session", user);
         }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("msg", result);
+        request.setAttribute(RequestUtil.LOGGER_RETURN, jsonObject);
         return result;
     }
 }

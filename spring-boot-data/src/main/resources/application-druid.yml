@@ -1,6 +1,13 @@
 spring:
   jpa:
     show-sql: true
+    hibernate:
+      ddl-auto: update
+#      naming:
+#        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+#    这句话不加，会创建MyISAM的存储引擎的表
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+
   datasource:
     url: jdbc:mysql://localhost:3306/test?characterEncoding=utf8
     username: root

@@ -98,11 +98,18 @@ public class MailSender {
         //读取mail.properties文件内容
         final PropertyUtil propertyUtil = new PropertyUtil("mail");
         Properties properties = new Properties();
-        properties.put("mail,stmp.auth", true);
-        properties.put("mail.stmp.host", propertyUtil.getValue("mail.stmp.service"));
-        properties.put("mail.stmp.port", propertyUtil.getValue("mail,stmp.port"));
+        properties.put("mail.smtp.auth", true);
+
+        properties.put("mail.smtp.host", propertyUtil.getValue("mail.smtp.service"));
+        properties.put("mail.smtp.port", propertyUtil.getValue("mail.smtp.port"));
         properties.put("mail.user", propertyUtil.getValue("mail.from.addr"));
-        properties.put("mail.password", propertyUtil.getValue("mail.from.stmp.pwd"));
+        properties.put("mail.password", propertyUtil.getValue("mail.from.pwd"));
+        properties.put("mail.transport.protocol", "smtp");
+        properties.put("mail.smtp.starttls.enable", "true");
+
+//        properties.put("mail.smtp.socketFactory.port", "mail.smtp.port");
+//        properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+//        properties.put("mail.smtp.socketFactory.fallback", "false");
 
         Authenticator authenticator = new Authenticator() {
             @Override
@@ -115,16 +122,13 @@ public class MailSender {
         };
 
         //使用环境属性和授权信息创建邮箱会话
-        Session mailSession = Session.getInstance(properties, authenticator);
-
+        Session mailSession = Session.getDefaultInstance(properties, authenticator);
         //创建邮件消息
         MimeMessage mimeMessage = new MimeMessage(mailSession);
-
         //设置发件人
         String nickName = MimeUtility.encodeText(propertyUtil.getValue("mail.from.nickname"));
         InternetAddress from = new InternetAddress(nickName + "<" + properties.get("mail.user") + ">");
         mimeMessage.setFrom(from);
-
         //设置邮箱标题
         mimeMessage.setSubject(mail.getTitle());
         //html发送邮件
@@ -133,14 +137,14 @@ public class MailSender {
         } else if (mail.getContentType().equals(MailContentTypeEnum.TEXT)) {
             mimeMessage.setText(mail.getContent());//文本发送邮件
         }
-
         //收件人
         List<String> targets = mail.getRecvList();
         InternetAddress[] addressArray = new InternetAddress[targets.size()];
-        for (int i=0; i < targets.size(); i++) {
-           addressArray[i] = new InternetAddress(targets.get(i));
+        for (int i = 0; i < targets.size(); i++) {
+            addressArray[i] = new InternetAddress(targets.get(i));
         }
         mimeMessage.setRecipients(Message.RecipientType.TO, addressArray);
+        System.out.println("send mime message: "+ mimeMessage.toString());
         //发送邮件
         Transport.send(mimeMessage);
     }

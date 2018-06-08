@@ -60,34 +60,34 @@ public class MysqlJpaTest {
 //
     @Before
     public void initData() {
-        //清除所有数据
-        userRepository.deleteAll();
-        departmentRepository.deleteAll();
-        roleRepository.deleteAll();
-
-        //插入数据
-        Department department = new Department();
-        department.setName("开发部");
-        departmentRepository.save(department);
-        Assert.notNull(department.getId());
-
-        Role role = new Role();
-        role.setName("guest");
-        roleRepository.save(role);
-        Assert.notNull(role.getId());
-
-        User user = new User();
-        user.setName("李四");
-        user.setCreateDate(new Date());
-        user.setDepartment(department);
-        user.setPwd("123456");
-
-        List<Role> roles = roleRepository.findAll();
-        Assert.notNull(roles);
-        user.setRoles(roles);
-
-        userRepository.save(user);
-        Assert.notNull(user.getId());
+//        //清除所有数据
+//        userRepository.deleteAll();
+//        departmentRepository.deleteAll();
+//        roleRepository.deleteAll();
+//
+//        //插入数据
+//        Department department = new Department();
+//        department.setName("开发部");
+//        departmentRepository.save(department);
+//        Assert.notNull(department.getId());
+//
+//        Role role = new Role();
+//        role.setName("guest");
+//        roleRepository.save(role);
+//        Assert.notNull(role.getId());
+//
+//        User user = new User();
+//        user.setName("李四");
+//        user.setCreateDate(new Date());
+//        user.setDepartment(department);
+//        user.setPwd("123456");
+//
+//        List<Role> roles = roleRepository.findAll();
+//        Assert.notNull(roles);
+//        user.setRoles(roles);
+//
+//        userRepository.save(user);
+//        Assert.notNull(user.getId());
     }
 
 
