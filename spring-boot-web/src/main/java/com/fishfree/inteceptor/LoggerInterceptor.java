@@ -15,12 +15,7 @@ package com.fishfree.inteceptor;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.fishfree.jpa.entity.LoggerEntity;
-import com.fishfree.jpa.repository.LoggerRepository;
-import com.fishfree.util.BeanUtil;
 import com.fishfree.util.RequestUtil;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -78,7 +73,7 @@ public class LoggerInterceptor implements HandlerInterceptor {
         loggerEntity.setReturnTime(currentTime+"");
 
         //保存日志到数据库中
-        BeanUtil.getBean(LoggerRepository.class,request).save(loggerEntity);
+//        BeanUtil.getBean(LoggerRepository.class,request).save(loggerEntity);
     }
 
 }

@@ -15,7 +15,12 @@ package com.fishfree.jpa.repository;
 
 import com.fishfree.jpa.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @author litengfeng
@@ -26,4 +31,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<User,Long> {
 
+    //@Query 自定义查下语句
+    @Query(value = "select * from user where id > ?1",nativeQuery = true)
+    List<User> nativeQuery(long id);
+
+    @Transactional
+    @Modifying
+    @Query(value = "delete from user where id = ?1",nativeQuery = true)
+    List<User> customDelete(long id);
 }

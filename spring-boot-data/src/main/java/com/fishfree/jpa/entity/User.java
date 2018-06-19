@@ -13,7 +13,6 @@
 package com.fishfree.jpa.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;

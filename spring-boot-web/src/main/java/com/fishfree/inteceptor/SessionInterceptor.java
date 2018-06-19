@@ -12,10 +12,12 @@
  */
 package com.fishfree.inteceptor;
 
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author litengfeng
@@ -29,11 +31,14 @@ public class SessionInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //登录不做拦截
-        if(request.getRequestURI().equals("/user/login") || request.getRequestURI().equals("/user/login_view")){
+        if(request.getRequestURI().equals("/user/login") ||
+                request.getRequestURI().equals("/user/login_view") ||
+                request.getRequestURI().startsWith("/springmvc") ||
+                request.getRequestURI().startsWith("/error")){
             return true;
         }
-
-        Object obj = request.getSession().getAttribute("user_session");
+        HttpSession session = request.getSession();
+        Object obj = session.getAttribute("user_session");
         if(obj == null){
             //跳转到登录页面登录
             response.sendRedirect("/user/login_view");

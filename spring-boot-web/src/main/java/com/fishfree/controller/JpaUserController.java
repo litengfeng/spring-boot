@@ -12,18 +12,21 @@
  */
 package com.fishfree.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.fishfree.jpa.entity.User;
 import com.fishfree.jpa.repository.UserRepository;
 import com.fishfree.util.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,8 +51,26 @@ public class JpaUserController {
         return userRepository.findAll();
     }
 
+    //获取大于指定id的数据
+    @RequestMapping(value = "getGEId/{id}", method = RequestMethod.GET)
+    public List<User> listGEId(@PathVariable Long id) {
+        return userRepository.nativeQuery(id);
+    }
+
+    @RequestMapping(value = "customDelete/{id}")
+    public String customDelete(@PathVariable Long id) {
+        userRepository.customDelete(id);
+        return "自定义删除成功";
+    }
+
+    @RequestMapping("/cutpage")
+    public List<User> cutPage(int page) {
+        PageRequest pageRequest = new PageRequest(page, 2);
+        return userRepository.findAll(pageRequest).getContent();
+    }
+
     @RequestMapping(value = "login", method = RequestMethod.GET)
-    public String login(User user, HttpServletRequest request) {
+    public String login(User user, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String result = "login success";
         boolean loginFlag = true;
         User userExample = new User();
@@ -68,11 +89,15 @@ public class JpaUserController {
         }
         if (loginFlag) {
             //登录成功后设置到session中
-            request.getSession().setAttribute("user_session", user);
+            HttpSession session = request.getSession();
+            session.setAttribute("user_session", user);
         }
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg", result);
         request.setAttribute(RequestUtil.LOGGER_RETURN, jsonObject);
         return result;
     }
+
+
+
 }
